@@ -26,13 +26,8 @@ public class MainActivity extends AppCompatActivity implements MyOnItemClick, Ha
         setContentView(R.layout.activity_main);
 
         handler = new Handler(this);
-        NoticiaWorker w = new NoticiaWorker(handler);
-        Thread t = new Thread(w);
-        t.start();
-
-        //noticias.add(new NoticiaModel("1", "titulo1", "descripcion1", "fuente1", "imagen1",  new Date()));
-        //noticias.add(new NoticiaModel("2", "titulo2", "descripcion2", "fuente2", "imagen2",  new Date()));
-        //noticias.add(new NoticiaModel("3", "titulo3", "descripcion3", "fuente3", "imagen3",  new Date()));
+        NoticiaWorker w = new NoticiaWorker(handler, "https://www.telam.com.ar/rss2/politica.xml");
+        w.start();
 
         this.adapter = new NoticiaAdapter(noticias, this);
         RecyclerView list = (RecyclerView)findViewById(R.id.list);
@@ -49,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements MyOnItemClick, Ha
     @Override
     public boolean handleMessage(@NonNull Message msg) {
         String text = (String) msg.obj;
-        Log.d("MainActivity", text);
+        //Log.d("MainActivity", text);
         ArrayList<NoticiaModel> noticiasRes = NoticiaXmlPaser.parse(text);
 
         for (NoticiaModel noticia:noticiasRes){

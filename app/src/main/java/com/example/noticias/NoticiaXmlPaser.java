@@ -18,6 +18,8 @@ public class NoticiaXmlPaser {
         XmlPullParser parser = Xml.newPullParser();
         ArrayList<NoticiaModel> noticias = new ArrayList<NoticiaModel>();
         String text = "";
+        String tag = "";
+        String fuente = "";
         Boolean itemEsNoticia = false;
         NoticiaModel noticia = null;
 
@@ -25,58 +27,46 @@ public class NoticiaXmlPaser {
             parser.setInput(new StringReader(xmlText));
             int event = 0;
             event = parser.getEventType();
-            //Log.d("XmlPaser TAG NEXT", Integer.valueOf(event).toString());
-            while (event != XmlPullParser.END_DOCUMENT)
-            {
-                String tag = parser.getName();
-
-                switch (event)
-                {
+            while (event != XmlPullParser.END_DOCUMENT) {
+                switch (event) {
                     case XmlPullParser.START_TAG:
-                        //Log.d("XmlPaser START_TAG", tag);
-                        if (tag.equalsIgnoreCase("item"))
-                        {
-                            itemEsNoticia = true;
+                        tag = parser.getName();
+                        Log.d("XmlPaser TAG", tag);
+                        if (tag.equalsIgnoreCase("title") && !itemEsNoticia) {
+                            fuente = parser.nextText();
+                            Log.d("XmlPaser TEXT no item", fuente);
+                        } else if (tag.equalsIgnoreCase("item")) {
+                            Log.d("XmlPaser ITEM", "nuevo item");
                             noticia = new NoticiaModel();
-                            noticia.setFuente("telam");
-                            noticia.setFecha(new Date());
-                            noticia.setImagen("img");
-                            //Log.d("NOTICIA START_TAG item", noticia.getFuente());
-                        }
-                        break;
-
-                    case XmlPullParser.TEXT:
-
-                        text = parser.getText();
-                        //Log.d("XmlPaser TEXT", text);
-                        break;
-
-                    case XmlPullParser.END_TAG:
-                        //Log.d("XmlPaser END_TAG", text);
-                        if (tag.equalsIgnoreCase("item") && itemEsNoticia) {
+                            noticia.setFuente(fuente);
                             noticias.add(noticia);
-                        } else if (tag.equalsIgnoreCase("title") && itemEsNoticia){
+                            itemEsNoticia = true;
+                        } else if (tag.equalsIgnoreCase("title") && itemEsNoticia) {
+                            text = parser.nextText();
                             noticia.setTitulo(text);
-                            noticia.setIdentificador(text);
-                            //Log.d("XmlPaser TAG title", text);
-                        } else if (tag.equalsIgnoreCase("description")  && itemEsNoticia){
+                            //noticia.setIdentificador(text);
+                            Log.d("XmlPaser TEXT title", text);
+                        } else if (tag.equalsIgnoreCase("description") && itemEsNoticia) {
+                            text = parser.nextText();
                             noticia.setDescripcion(text);
-                            //Log.d("XmlPaser TAG summary", text);
-                        } else if (tag.equalsIgnoreCase("pubDate")  && itemEsNoticia){
-                            //noticia.setFecha(new Date(text));
-                            //Log.d("XmlPaser TAG pubDate", text);
+                            Log.d("XmlPaser TEXT descript", text);
+                        } else if (tag.equalsIgnoreCase("pubDate") && itemEsNoticia) {
+                            text = parser.nextText();
+                            noticia.setFecha(text);
+                            Log.d("XmlPaser TEXT pubDate", text);
+                        } else if (tag.equalsIgnoreCase("enclosure") && itemEsNoticia) {
+                            String att = parser.getAttributeValue(null,"url");
+                            Log.d("XmlPaser TEXT att", att);
+                            noticia.setImagen(att);
                         }
-                        /*if(noticia!=null){
-                            Log.d("NOTICIA END_TAG item", noticia.toString());
-                        }*/
                         break;
                 }
                 event = parser.next();
+                Log.d("XmlPaser event", Integer.valueOf(event).toString());
             }
         } catch (XmlPullParserException e) {
             e.printStackTrace();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return noticias;

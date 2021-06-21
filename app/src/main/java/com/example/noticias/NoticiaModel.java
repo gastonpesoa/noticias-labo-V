@@ -10,12 +10,13 @@ public class NoticiaModel {
     private String descripcion;
     private String fuente;
     private String imagen;
-    private Date fecha;
+    private String fecha;
+    private byte[] img;
 
     public NoticiaModel() {
     }
 
-    public NoticiaModel(String identificador, String titulo, String descripcion, String fuente, String imagen, Date fecha) {
+    public NoticiaModel(String identificador, String titulo, String descripcion, String fuente, String imagen, String fecha) {
         this.identificador = identificador;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -64,12 +65,20 @@ public class NoticiaModel {
         this.imagen = imagen;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+    public byte[] getImg() {
+        return img;
+    }
+
+    public void setImg(byte[] img) {
+        this.img = img;
     }
 
     @Override

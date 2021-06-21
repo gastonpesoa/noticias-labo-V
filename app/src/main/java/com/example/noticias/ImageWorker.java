@@ -2,21 +2,23 @@ package com.example.noticias;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import java.io.IOException;
 
-public class NoticiaWorker implements Runnable {
+public class ImageWorker implements Runnable {
+
+    private int position;
     private String url;
     private Handler h;
     private NoticiaHttpManager httpManager;
 
-    public NoticiaWorker() {
+    public ImageWorker() {
     }
 
-    public NoticiaWorker(Handler h, String url) {
+    public ImageWorker(Handler h, String url, int position) {
         this.h = h;
         this.url = url;
+        this.position = position;
     }
 
     public void start(){
@@ -29,16 +31,17 @@ public class NoticiaWorker implements Runnable {
         httpManager = new NoticiaHttpManager(this.url);
         if (httpManager.isReady()){
             try {
-                sendMsg(httpManager.getStrDataByGET());
+                sendMsg(httpManager.getBytesDataByGET());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void sendMsg(String msg){
+    private void sendMsg(byte[] msg){
         Message message = new Message();
         message.obj = msg;
+        message.arg1 = position;
         h.sendMessage(message);
     }
 }

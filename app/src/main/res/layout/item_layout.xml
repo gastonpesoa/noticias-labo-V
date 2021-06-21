@@ -28,6 +28,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvImagen"/>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ivImagen"
+        android:src="@android:drawable/gallery_thumb"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

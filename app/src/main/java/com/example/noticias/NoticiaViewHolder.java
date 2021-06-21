@@ -2,6 +2,7 @@ package com.example.noticias;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ public class NoticiaViewHolder extends RecyclerView.ViewHolder implements View.O
     TextView tvImagen;
     TextView tvTitulo;
     TextView tvDescripcion;
+    ImageView ivImagen;
     private int position;
 
     public NoticiaViewHolder(@NonNull View itemView, MyOnItemClick listener) {
@@ -26,6 +28,7 @@ public class NoticiaViewHolder extends RecyclerView.ViewHolder implements View.O
         tvImagen = itemView.findViewById(R.id.tvImagen);
         tvTitulo = itemView.findViewById(R.id.tvTitulo);
         tvDescripcion = itemView.findViewById(R.id.tvDescripcion);
+        ivImagen =itemView.findViewById(R.id.ivImagen);
         itemView.setOnClickListener(this);
         this.listener = listener;
     }
