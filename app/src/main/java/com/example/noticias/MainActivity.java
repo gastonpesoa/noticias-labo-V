@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -30,8 +31,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements MyOnItemClick, Handler.Callback, SearchView.OnQueryTextListener, DialogInterface.OnClickListener {
+public class MainActivity extends AppCompatActivity implements MyOnItemClick, Handler.Callback, SearchView.OnQueryTextListener, DialogInterface.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
+    SwipeRefreshLayout swipeRefreshLayout;
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
     JSONArray arrayUrlRss;
@@ -49,7 +51,8 @@ public class MainActivity extends AppCompatActivity implements MyOnItemClick, Ha
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d("main", "creado");
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setOnRefreshListener(this);
 
         this.prefs = getSharedPreferences("miConfig", Context.MODE_PRIVATE);
         this.editor = prefs.edit();
@@ -161,8 +164,11 @@ public class MainActivity extends AppCompatActivity implements MyOnItemClick, Ha
                 this.adapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 e.printStackTrace();
+            } finally {
+                swipeRefreshLayout.setRefreshing(false);
             }
         }
+
         return true;
     }
 
@@ -244,5 +250,13 @@ public class MainActivity extends AppCompatActivity implements MyOnItemClick, Ha
             NoticiaWorker w = new NoticiaWorker(handler, rss.getUrl());
             w.start();
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        this.noticias.clear();
+        this.noticiasCopiaParaQuerys.clear();
+        this.noticiasCopia.clear();
+        this.doRssRequests();
     }
 }
