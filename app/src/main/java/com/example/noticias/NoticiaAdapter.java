@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,12 +55,14 @@ public class NoticiaAdapter extends RecyclerView.Adapter<NoticiaViewHolder> impl
             holder.ivImagen.setImageBitmap(BitmapFactory.decodeByteArray(noticia.getImg(),0,noticia.getImg().length));
         }
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        holder.tvFecha.setText(sdf.format(noticia.getFecha()));
+
         holder.tvIdentificador.setText(noticia.getIdentificador());
-        holder.tvFecha.setText(noticia.getFecha());
         holder.tvFuente.setText(noticia.getFuente());
         holder.tvTitulo.setText(noticia.getTitulo());
         holder.tvDescripcion.setText(noticia.getDescripcion());
-        holder.tvImagen.setText(noticia.getImagen());
+        //holder.tvImagen.setText(noticia.getImagen());
         holder.setPosition(position);
     }
 

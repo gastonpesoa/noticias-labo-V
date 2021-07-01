@@ -25,7 +25,7 @@ public class NoticiaViewHolder extends RecyclerView.ViewHolder implements View.O
         tvIdentificador = itemView.findViewById(R.id.tvIdentificador);
         tvFecha = itemView.findViewById(R.id.tvFecha);
         tvFuente = itemView.findViewById(R.id.tvFuente);
-        tvImagen = itemView.findViewById(R.id.tvImagen);
+       // tvImagen = itemView.findViewById(R.id.tvImagen);
         tvTitulo = itemView.findViewById(R.id.tvTitulo);
         tvDescripcion = itemView.findViewById(R.id.tvDescripcion);
         ivImagen =itemView.findViewById(R.id.ivImagen);

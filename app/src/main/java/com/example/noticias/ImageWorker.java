@@ -42,6 +42,7 @@ public class ImageWorker implements Runnable {
         Message message = new Message();
         message.obj = msg;
         message.arg1 = position;
+        message.arg2 = EMessages.IMAGEN.getValue();
         h.sendMessage(message);
     }
 }

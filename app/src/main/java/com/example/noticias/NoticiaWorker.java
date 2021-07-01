@@ -4,6 +4,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 public class NoticiaWorker implements Runnable {
@@ -26,11 +29,16 @@ public class NoticiaWorker implements Runnable {
 
     @Override
     public void run() {
+
         httpManager = new NoticiaHttpManager(this.url);
         if (httpManager.isReady()){
             try {
-                sendMsg(httpManager.getStrDataByGET());
-            } catch (IOException e) {
+                String data = httpManager.getStrDataByGET();
+                JSONObject response = new JSONObject();
+                response.put("url", this.url);
+                response.put("data", data);
+                sendMsg(response.toString());
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
         }
@@ -39,6 +47,7 @@ public class NoticiaWorker implements Runnable {
     private void sendMsg(String msg){
         Message message = new Message();
         message.obj = msg;
+        message.arg2 = EMessages.NOTICIA.getValue();
         h.sendMessage(message);
     }
 }
