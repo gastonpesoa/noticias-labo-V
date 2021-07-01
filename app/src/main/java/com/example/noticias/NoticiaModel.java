@@ -1,11 +1,12 @@
 package com.example.noticias;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class NoticiaModel {
+public class NoticiaModel implements Serializable {
 
-    private String identificador;
+    private String link;
     private String titulo;
     private String descripcion;
     private String fuente;
@@ -16,8 +17,8 @@ public class NoticiaModel {
     public NoticiaModel() {
     }
 
-    public NoticiaModel(String identificador, String titulo, String descripcion, String fuente, String imagen, Date fecha) {
-        this.identificador = identificador;
+    public NoticiaModel(String link, String titulo, String descripcion, String fuente, String imagen, Date fecha) {
+        this.link = link;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.fuente = fuente;
@@ -25,12 +26,12 @@ public class NoticiaModel {
         this.fecha = fecha;
     }
 
-    public String getIdentificador() {
-        return identificador;
+    public String getLink() {
+        return link;
     }
 
-    public void setIdentificador(String identificador) {
-        this.identificador = identificador;
+    public void setLink(String link) {
+        this.link = link;
     }
 
     public String getTitulo() {
@@ -86,7 +87,7 @@ public class NoticiaModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NoticiaModel that = (NoticiaModel) o;
-        return Objects.equals(identificador, that.identificador) &&
+        return Objects.equals(link, that.link) &&
                 Objects.equals(titulo, that.titulo) &&
                 Objects.equals(descripcion, that.descripcion) &&
                 Objects.equals(fuente, that.fuente) &&
@@ -96,13 +97,13 @@ public class NoticiaModel {
 
     @Override
     public int hashCode() {
-        return Objects.hash(identificador, titulo, descripcion, fuente, imagen, fecha);
+        return Objects.hash(link, titulo, descripcion, fuente, imagen, fecha);
     }
 
     @Override
     public String toString() {
         return "NoticiaModel{" +
-                "identificador=" + identificador +
+                "identificador=" + link +
                 ", titulo='" + titulo + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", fuente='" + fuente + '\'' +

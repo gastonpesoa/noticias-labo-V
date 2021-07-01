@@ -64,6 +64,9 @@ public class NoticiaXmlPaser {
                             String att = parser.getAttributeValue(null, "url");
                             //Log.d("XmlPaser TEXT att", att);
                             noticia.setImagen(att.trim());
+                        } else if (tag.equalsIgnoreCase("link") && itemEsNoticia) {
+                            text = parser.nextText();
+                            noticia.setLink(text.trim());
                         }
                         break;
                 }

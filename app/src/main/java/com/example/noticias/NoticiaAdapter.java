@@ -4,7 +4,6 @@ import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 public class NoticiaAdapter extends RecyclerView.Adapter<NoticiaViewHolder> implements Handler.Callback{
@@ -58,7 +56,7 @@ public class NoticiaAdapter extends RecyclerView.Adapter<NoticiaViewHolder> impl
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         holder.tvFecha.setText(sdf.format(noticia.getFecha()));
 
-        holder.tvIdentificador.setText(noticia.getIdentificador());
+        holder.tvIdentificador.setText(noticia.getLink());
         holder.tvFuente.setText(noticia.getFuente());
         holder.tvTitulo.setText(noticia.getTitulo());
         holder.tvDescripcion.setText(noticia.getDescripcion());

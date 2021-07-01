@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -103,7 +104,11 @@ public class MainActivity extends AppCompatActivity implements MyOnItemClick, Ha
 
     @Override
     public void onItemClick(int position) {
-        Log.d("MainActivity", noticias.get(position).toString());
+        NoticiaModel noticiaDetalle = noticias.get(position);
+        Log.d("MainActivity", noticiaDetalle.toString());
+        Intent intent = new Intent(this, NoticiaDetalle.class);
+        intent.putExtra("noticia", noticiaDetalle);
+        startActivity(intent);
     }
 
     @Override
